@@ -35,4 +35,11 @@ This testing data is in the format of:
     
 The goal of the AI is to find the pattern in the data (the boolean) and gain the ability to predict if an unseen data set falls under the true or false label.
 
+**Findings**
+This project was first made using a neural network of weights only, no biases. The maximum score of this network was ~90.9% after X generations.
+
+In an attempt to increase the accuracy of the network, biases were added. The maximum score of this network was ~90.9% after 26 generations.
+
+
+
 
