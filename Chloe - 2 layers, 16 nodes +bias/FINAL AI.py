@@ -3,6 +3,8 @@ import math
 
 #AUTIN PIPKINS 9-19-19 started: 9:00pm
 
+ 
+# \/ \/ \/ \/ \/ \/ \/ Defines the network
 
 #sigmoid function
 def sig(x):
@@ -22,7 +24,7 @@ class Layer0:
 
 #first layer of nodes
 class Layer1:
-  bias = 0
+  bias = 0#one bias per layer: adds a constant amount to each node of the layer
   def __init__(self):
     self.value = .5
 
@@ -46,12 +48,12 @@ class Layer1:
       self.weightSet.append(rando)#adds this random float to weightSet, the lsit of weights
 
 
-  def updateValue(self):#will update current value based on previous layer's lavues
+  def updateValue(self):#will update current value based on previous layer's values
     value = 0#and this node's weights that coorispond to them
     for i in range(len(layer0Nodes)):#do this n times, n = numebr of nodes in prev layer
-        value = value + self.weightSet[i]*layer0Nodes[i].getValue()#a1x1+a2x2+a3x3+a4x4 (a -> weights, x -> prev layer node values)
+        value = value + self.weightSet[i]*layer0Nodes[i].getValue()#a1x1+a2x2+a3x3+a4x4+b (a -> weights, x -> prev layer node values), b -> bias
              
-    value = sig(value+self.getBias())#all values must be between 0-1, sigmoid corrects for that
+    value = sig(value+self.getBias())#all values must be between 0-1, sigmoid corrects for that (activator)
     self.value = value
 
   def setBias(self, newBias):
@@ -61,7 +63,7 @@ class Layer1:
     return Layer1.bias
 
   def defBias(self):
-    Layer1.bias = random.randint(-999999,999999)/9999999.0
+    Layer1.bias = random.randint(-999999,999999)/9999999.0#random float from -.0999 to .0999
     
 
             
@@ -149,9 +151,9 @@ class Layer3:
   def defBias(self):
     Layer3.bias = random.randint(-999999,999999)/9999999.0
 
+# /\ /\ /\ /\ /\ /\ /\ Defines the network
 
-
-
+# \/ \/ \/ \/ \/ \/ \/ Makes printAI, allows for debugging and checking math.
 
 #will round each element of a list
 def roun(lis):
@@ -161,7 +163,7 @@ def roun(lis):
 
     return lisp
 
-#will post a screenshot of the nodes and weights of an AI instance
+#will post a screenshot of the nodes, weights, and biases of an AI instance
 def printAI():
   print("LAYER 0\n") 
   for i in range(len(layer0Nodes)):
@@ -182,7 +184,7 @@ def printAI():
 
   print("\n")
   
-
+  print("bias:   ", end='')
   print ((layer1Nodes[0].getBias()), end="")
 
 
@@ -202,6 +204,7 @@ def printAI():
 
   print("\n")
 
+  print("bias:   ", end='')
   print ((layer2Nodes[0].getBias()), end="")
 
   print("\n\n")
@@ -222,11 +225,15 @@ def printAI():
 
   print("\n")
 
+  print("bias:   ", end='')
   print ((layer3Nodes[0].getBias()), end="")
 
 
   print("\n")
 
+# /\ /\ /\ /\ /\ /\ /\ Makes printAI, allows for debugging and checking math.
+
+# \/ \/ \/ \/ \/ \/ \/ Initializes the network. Defines the size of "brain", and the size of the gene pool
 
 #makes le brain
 layer0Nodes = [Layer0(0),Layer0(0),Layer0(0),Layer0(0),Layer0(0)]
@@ -234,15 +241,21 @@ layer1Nodes = [Layer1(), Layer1(),Layer1(), Layer1(),Layer1(), Layer1(),Layer1()
 layer2Nodes = [Layer2(), Layer2(),Layer2(), Layer2(),Layer1(), Layer1(),Layer1(), Layer1()]
 layer3Nodes = [Layer3()]
 
-topScoreList = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-topWeightList = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-topBiasList = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+topScoreList = [0,0,0,0,0,0,0,0,0,0,0,0]
+topWeightList = [0,0,0,0,0,0,0,0,0,0,0,0]
+topBiasList = [0,0,0,0,0,0,0,0,0,0,0,0]
+
+
+# /\ /\ /\ /\ /\ /\ /\ Initializes the network. Defines the size of "brain", and the size of the gene pool
+
+# \/ \/ \/ \/ \/ \/ \/ Generation 0 code
+
 
 topGen = 0
 
 #generation 0
 testNum = 1
-while testNum < 3000:
+while testNum < 200:
   #make AI
   print("on test number: ", testNum)
   
@@ -353,17 +366,19 @@ while testNum < 3000:
 
 
 
+# /\ /\ /\ /\ /\ /\ /\ Generation 0 code
 
+# \/ \/ \/ \/ \/ \/ \/ Generation 1+ code
 
 #generation 1+
 generation = 1
 while generation < 1000:#number of generaitons
-  print("top score generation is:", topGen)
-  print(topScoreList)
+  print("\ntop score generation is:", topGen)
+  print("top scores are: ",topScoreList)
   print("")
-  print(topWeightList)
+  print("top weight set is: ",topWeightList[0])
   print("")
-  print(topBiasList)
+  print("top bias set is:  ",topBiasList[0], "\n")
   testNum = 1
   while testNum < 200:
 
@@ -506,21 +521,4 @@ while generation < 1000:#number of generaitons
 
     testNum = testNum+1
   generation = generation + 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
 
